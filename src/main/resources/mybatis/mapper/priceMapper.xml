@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 对应的接口全类名 id ：接口方法名 parameterType ： 传递属性类型 -->
+<mapper namespace="com.dbb.dao.PriceMapper">
+
+	<select id="selectPriceByMerchantId"  resultType="com.dbb.entity.Price" >
+		select p.* from price p join merchant m on p.id = m.priceid where m.id = #{merchantid}
+	</select>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 对应的接口全类名 id ：接口方法名 parameterType ： 传递属性类型 -->
+<mapper namespace="com.dbb.dao.WaterUsageMapper">
+	<insert id="addTodayUsage" parameterType="com.dbb.entity.WaterUsage">
+		insert into todaywaterusage(merchantid, cost,allusage,shareusage,sharecost,settletime,nowreading)
+					   values(#{merchantid},#{cost},#{allusage},#{shareusage},#{sharecost},#{settletime},#{nowreading})
+	</insert>
+	<insert id="addHistoryUsage" parameterType="com.dbb.entity.WaterUsage">
+		insert into historywaterusage(merchantid, cost,allusage,shareusage,sharecost,settletime,nowreading)
+					   values(#{merchantid},#{cost},#{allusage},#{shareusage},#{sharecost},#{settletime},#{nowreading})
+	</insert>
+
+	<delete id="deleteAllTodayUsage">
+		 truncate table todaywaterusage
+	</delete>
+	<select id="getTodayAllUsage" resultType="com.dbb.entity.WaterUsage">
+		select merchantid, sum(cost) as cost,sum(allusage) as allusage, sum(sharecost) as sharecost,sum(shareusage) as shareusage,max(nowreading) as nowreading from todaywaterusage group by merchantid;
+	</select>
+
+	<select id="getHistoryUsageByCode"  resultType="int"  parameterType="com.dbb.entity.WaterUsage">
+		select count(*)  from historywaterusage where merchantid=#{merchantid} and settletime = #{settletime}
+	</select>
+</mapper>

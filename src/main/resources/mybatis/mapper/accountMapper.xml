@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 对应的接口全类名 id ：接口方法名 parameterType ： 传递属性类型 -->
+<mapper namespace="com.dbb.dao.AccountMapper">
+
+	<select id="selectAllAccount"  resultType="com.dbb.entity.Account" >
+		select * from account
+	</select>
+	<select id="selectCount"  resultType="int" >
+		select count(*) from account where collectors = #{collectors}
+	</select>
+	<update id="updateAccount" parameterType="com.dbb.entity.Account">
+		update account set usagepower=#{usagepower},cost=#{cost} ,nowreading=#{nowreading} where id=#{id}
+	</update>
+</mapper>

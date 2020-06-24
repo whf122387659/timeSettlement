@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 对应的接口全类名 id ：接口方法名 parameterType ： 传递属性类型 -->
+<mapper namespace="com.dbb.dao.ElecUsageMapper">
+	<insert id="addTodayUsage" parameterType="com.dbb.entity.ElecUsage">
+		insert into todayelecusage(merchantid, cost,tipusage,tipcost,peakusage,peakcost,valleyusage,valleycost,flatusage,flatcost,shareusage,sharecost,allusage,nowreading,settletime)
+					   values(#{merchantid},#{cost},#{tipusage},#{tipcost},#{peakusage},#{peakcost},#{valleyusage},#{valleycost},#{flatusage},#{flatcost},#{shareusage},#{sharecost},#{allusage},#{nowreading},#{settletime})
+	</insert>
+	<insert id="addHistoryUsage" parameterType="com.dbb.entity.ElecUsage">
+		insert into historyelecusage(merchantid, cost,tipusage,tipcost,peakusage,peakcost,valleyusage,valleycost,flatusage,flatcost,shareusage,sharecost,allusage,nowreading,settletime)
+					   values(#{merchantid},#{cost},#{tipusage},#{tipcost},#{peakusage},#{peakcost},#{valleyusage},#{valleycost},#{flatusage},#{flatcost},#{shareusage},#{sharecost},#{allusage},#{nowreading},#{settletime})
+	</insert>
+
+	<delete id="deleteAllTodayUsage">
+		 truncate table todayelecusage
+	</delete>
+	<select id="getTodayAllUsage" resultType="com.dbb.entity.ElecUsage">
+		select merchantid, sum(cost) as cost,sum(tipusage) as tipusage,sum(tipcost) as tipcost,sum(peakusage) as peakusage,sum(peakcost) as peakcost,sum(valleyusage) as valleyusage,sum(valleycost) as valleycost,sum(flatusage) as flatusage,sum(flatcost) as flatcost,sum(shareusage) as shareusage,sum(sharecost) as sharecost,sum(allusage) as allusage,max(nowreading) as nowreading from todayelecusage group by merchantid;
+	</select>
+
+	<select id="getHistoryUsageByCode"  resultType="int"  parameterType="com.dbb.entity.ElecUsage">
+		select count(*)  from historyelecusage where merchantid=#{merchantid} and settletime = #{settletime}
+	</select>
+</mapper>

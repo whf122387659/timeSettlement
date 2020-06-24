@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 对应的接口全类名 id ：接口方法名 parameterType ： 传递属性类型 -->
+<mapper namespace="com.dbb.dao.MerchantMapper">
+
+	<select id="selectAllMerchant"  resultType="com.dbb.entity.Merchant" parameterType="String">
+		select * from merchant where company_id=#{companyId}
+	</select>
+	<select id="selectMerchantById"  resultType="com.dbb.entity.Merchant" parameterType="String">
+		select * from merchant where id=#{id}
+	</select>
+	<select id="selectOppenMerchant"  resultType="com.dbb.entity.Merchant" parameterType="String" >
+		select * from merchant where companyid=#{companyId} and state=1
+	</select>
+	<update id="updateBalance" parameterType="com.dbb.entity.Merchant">
+		update merchant set balance=#{balance} where id=#{id}
+	</update>
+</mapper>
